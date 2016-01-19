@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class DistributedAllocationConfig {
-    private long lockWaitSeconds;
+    private final long lockWaitSeconds;
 }
