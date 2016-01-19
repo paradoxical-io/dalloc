@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.HazelcastInstanceNotActiveException;
 import com.hazelcast.core.IMap;
 import com.hazelcast.core.MemberAttributeEvent;
 import com.hazelcast.core.MembershipEvent;
@@ -64,7 +65,12 @@ public class HazelcastResourceAllocater extends HazelcastBase implements Resourc
 
     @Override
     public void close() throws Exception {
-        hazelcastInstance.getCluster().removeMembershipListener(hazelcastMembershipListenerId);
+        try {
+            hazelcastInstance.getCluster().removeMembershipListener(hazelcastMembershipListenerId);
+        }
+        catch(HazelcastInstanceNotActiveException ex){
+            logger.warn(ex, "Hazelcast instance not active!");
+        }
     }
 
     private MembershipListener getMembershipListener() {

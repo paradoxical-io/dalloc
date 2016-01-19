@@ -9,6 +9,7 @@ import io.paradoxical.dalloc.allocators.hazelcast.HazelcastResourceAllocater;
 import io.paradoxical.dalloc.model.ResourceConfig;
 import io.paradoxical.dalloc.model.ResourceGroup;
 import io.paradoxical.dalloc.model.ResourceIdentity;
+import lombok.Cleanup;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -23,28 +24,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HazelcastAllocatorTests extends TestBase {
 
+
     @Test
-    public void test_member_joins_rebalancing_occurs() {
+    public void test_member_joins_rebalancing_occurs() throws Exception {
         Set<ResourceIdentity> claimed1 = new HashSet<>();
 
-        final ResourceAllocator allocator1 = getAllocator("test_member_joins_rebalancing_occurs",
-                                                          () -> getFromInt(100),
-                                                          c -> {
-                                                              claimed1.clear();
-                                                              claimed1.addAll(c);
-                                                          });
+        @Cleanup final ResourceAllocator allocator1 = getAllocator("test_member_joins_rebalancing_occurs",
+                                                                   () -> getFromInt(100),
+                                                                   c -> {
+                                                                       claimed1.clear();
+                                                                       claimed1.addAll(c);
+                                                                   });
 
         allocator1.claim();
         assertThat(claimed1.size()).isEqualTo(100);
 
         Set<ResourceIdentity> claimed2 = new HashSet<>();
 
-        final ResourceAllocator allocator2 = getAllocator("test_member_joins_rebalancing_occurs",
-                                                          () -> getFromInt(100),
-                                                          c -> {
-                                                              claimed2.clear();
-                                                              claimed2.addAll(c);
-                                                          });
+        @Cleanup final ResourceAllocator allocator2 = getAllocator("test_member_joins_rebalancing_occurs",
+                                                                   () -> getFromInt(100),
+                                                                   c -> {
+                                                                       claimed2.clear();
+                                                                       claimed2.addAll(c);
+                                                                   });
 
 
         allocator1.claim();
@@ -55,17 +57,17 @@ public class HazelcastAllocatorTests extends TestBase {
     }
 
     @Test
-    public void test_member_releases_invalid_resources() {
+    public void test_member_releases_invalid_resources() throws Exception {
         Set<ResourceIdentity> claimed1 = new HashSet<>();
 
         Set<ResourceIdentity> totalSet = getFromInt(100);
 
-        final ResourceAllocator allocator1 = getAllocator("test_member_releases_invalid_resources",
-                                                          () -> totalSet,
-                                                          c -> {
-                                                              claimed1.clear();
-                                                              claimed1.addAll(c);
-                                                          });
+        @Cleanup final ResourceAllocator allocator1 = getAllocator("test_member_releases_invalid_resources",
+                                                                   () -> totalSet,
+                                                                   c -> {
+                                                                       claimed1.clear();
+                                                                       claimed1.addAll(c);
+                                                                   });
 
         allocator1.claim();
 
@@ -84,21 +86,21 @@ public class HazelcastAllocatorTests extends TestBase {
     public void test_member_leaves_rebalancing_occurs() throws Exception {
         Set<ResourceIdentity> claimed1 = new HashSet<>();
 
-        final ResourceAllocator allocator1 = getAllocator("test_member_leaves_rebalancing_occurs",
-                                                          () -> getFromInt(100),
-                                                          c -> {
-                                                              claimed1.clear();
-                                                              claimed1.addAll(c);
-                                                          });
+        @Cleanup final ResourceAllocator allocator1 = getAllocator("test_member_leaves_rebalancing_occurs",
+                                                                   () -> getFromInt(100),
+                                                                   c -> {
+                                                                       claimed1.clear();
+                                                                       claimed1.addAll(c);
+                                                                   });
 
         Set<ResourceIdentity> claimed2 = new HashSet<>();
 
-        final ResourceAllocator allocator2 = getAllocator("test_member_leaves_rebalancing_occurs",
-                                                          () -> getFromInt(100),
-                                                          c -> {
-                                                              claimed2.clear();
-                                                              claimed2.addAll(c);
-                                                          });
+        @Cleanup final ResourceAllocator allocator2 = getAllocator("test_member_leaves_rebalancing_occurs",
+                                                                   () -> getFromInt(100),
+                                                                   c -> {
+                                                                       claimed2.clear();
+                                                                       claimed2.addAll(c);
+                                                                   });
 
         allocator1.claim();
         allocator2.claim();
@@ -108,18 +110,18 @@ public class HazelcastAllocatorTests extends TestBase {
 
         allocator1.close();
 
-
         allocator2.claim();
+
         assertThat(claimed2).isEqualTo(getFromInt(100));
     }
 
     @Test
-    public void test_single_member_claims_all() {
+    public void test_single_member_claims_all() throws Exception {
         Set<ResourceIdentity> claimed = new HashSet<>();
 
-        final ResourceAllocator allocator = getAllocator("test_single_member_claims_all",
-                                                         () -> getFromInt(100),
-                                                         claimed::addAll);
+        @Cleanup final ResourceAllocator allocator = getAllocator("test_single_member_claims_all",
+                                                                  () -> getFromInt(100),
+                                                                  claimed::addAll);
 
         allocator.claim();
 
