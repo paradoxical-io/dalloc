@@ -53,4 +53,4 @@ Manual distribution relies on the user to define the total expected set of worke
 Total Set / Workers
 ```
 
-Resources.  There is no guarantee of overlap protection, but since resource identifiers are _ordered_ they will deterministically choose the same slice sections.
+Resources.  There is no guarantee of overlap protection, but since resource identifiers are _ordered_ they will deterministically choose the same slice sections. 
