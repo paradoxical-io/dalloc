@@ -12,6 +12,7 @@
     <artifactId>dalloc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <description>A distributed resoure allocator</description>
 
     <name>dalloc</name>
     <url>http://maven.apache.org</url>
@@ -45,6 +46,7 @@
     </properties>
 
     <scm>
+        <url>http://github.com/paradoxical-io/dalloc</url>
         <connection>
             scm:git:git@github.com:paradoxical-io/dalloc.git
         </connection>
@@ -53,6 +55,16 @@
         </developerConnection>
     </scm>
 
+    <developers>
+        <developer>
+            <id>devshorts</id>
+            <name>Anton Kropp</name>
+        </developer>
+        <developer>
+            <id>jakeswenson</id>
+            <name>Jake Swenson</name>
+        </developer>
+    </developers>
 
     <distributionManagement>
         <snapshotRepository>
