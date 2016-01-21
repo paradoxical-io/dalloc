@@ -13,6 +13,18 @@ A distributed resource allocator. It supports
 The problem we are solving is having many distributed machines who should act on only 1 resource out of a set of resources.  For example, you have 10,000 items that each need monitoring, and you don't want more than one machine 
 monitoring an element in the set.  You need to distribute this work to a cluster of boxes such that each box is monitoring `10,000/clusterSize` elements.  
 
+# Installation
+
+To install
+
+```
+<dependency>
+    <groupId>io.paradoxical</groupId>
+    <artifactId>dalloc</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
 # Hazelcast Distribution
 
 Distribution in hazelcast constitutes of mapping your input set of resources to a `ResourceIdentifier` and grouping them as part of a `ResourceGroup`.  Given the set of
