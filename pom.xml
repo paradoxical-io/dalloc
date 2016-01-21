@@ -9,7 +9,7 @@
 
     <groupId>paradoxical</groupId>
     <artifactId>dalloc</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>A distributed resoure allocator</description>
 
@@ -52,7 +52,7 @@
         <developerConnection>
             scm:git:git@github.com:paradoxical-io/dalloc.git
         </developerConnection>
-      <tag>dalloc-1.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
